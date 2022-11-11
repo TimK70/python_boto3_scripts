@@ -1,52 +1,34 @@
-import boto3  #imports the SDK for Python from AWS
-
-# replace the keys below
-
-dynamodb = boto3.resource(
-    'dynamodb',
-    aws_access_key_id='*****',
-    aws_secret_access_key='*****',
-    )
-    
-    
-    
-    
-    
-    
-    
-    #!/usr/bin/env python3.9  #This tells my file I'm using python. Its similar to a bash script
-                          #Allows mo also use "./" instead of calling on python
 import boto3  #Imports boto3, the SDK for python from AWS
 
-dynamodb = boto3.resource('dynamodb', region_name='us-east-1')  #this will make a variable named DynamoDB thats calls the dynamodb resource of boto3
+dynamodb = boto3.resource('dynamodb')  #DynamoDB variable created that will call boto3's dynamoDB's resource.
 
-table = dynamodb.create_table(     #Creates our table, this is from the boto3 libary that calls the create_table 
-    TableName='Federation',   #Give your table a name
-    KeySchema=[    #Key schema required by dynamodb, 
+table = dynamodb.create_table(     #Create_table  from boto3 that Creates our table.
+    TableName='Favorite_Video_Games',   #Give your table a name
+    KeySchema=[    #DynamoDB Key Schema, 
         {
-            'AttributeName': 'PlanetName',  #Name of your part. key
-            'KeyType': 'HASH'  #Partition key  is a must
+            'AttributeName': 'Title',  #Name of your partition key
+            'KeyType': 'HASH'  #Partition key  is required
         },
         {
-            'AttributeName': 'Quadrant',   #Name of sort key
+            'AttributeName': 'Genre',   #Name of sort key
             'KeyType': 'RANGE'  #Sort key
         }
     ],
     AttributeDefinitions=[
         {
-            'AttributeName': 'PlanetName',    #Reenter your part. key and is its a S|N|B, string, number, boolean
+            'AttributeName': 'Title',    #Reenter partition key and state whether it is a string, number, boolean (S|N|B)
             'AttributeType': 'S'
         },
         {
-            'AttributeName': 'Quadrant', #Reenter your sort key and is its a S|N|B, string, number, boolean
+            'AttributeName': 'Genre', #Reenter your sort key and indicate whether it's a string, number, or boolean (S|N|B)
             'AttributeType': 'S'
         },
 
     ],
-    ProvisionedThroughput={    #This is how fast your table will upload data
-        'ReadCapacityUnits': 1,  #if you have alot of info to upload make it like 10 RCU/WCUI
+    ProvisionedThroughput={     #How quickly the table uploads the data
+        'ReadCapacityUnits': 1,  #If you have more data, increase the amount of RCU's/WCU's
         'WriteCapacityUnits': 1
     }
 )
 
-print("Table status:", table.table_status)  #Will print that our table is creating 
+print("Table status:", table.table_status)  #Display message that the table is being created.
