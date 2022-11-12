@@ -13,20 +13,8 @@ table = dynamodb.Table(TABLE_NAME)
 print(table)
 
 
-response = dynamodb_client.query(
-    TableName=TABLE_NAME,
-    KeyConditionExpression=Key('Genre = :Genre'),
-    ExpressionAttributeValues={':Genre': {'S': 'Pitfall'}
-    }
-)
+response = table.query(KeyConditionExpression=Key('Title').eq('Pitfall')) #Make beginning query
+TableName=TABLE_NAME,
+KeyConditionExpression=Key('Title'),
+ExpressionAttributeValues={':Title': 'Pitfall'}
 print(response['Items'])
-#from boto3.dynamodb.conditions import Key #allows us to call the query
-
-#dynamodb = boto3.resource('dynamodb') #reference the boto3 DynamoDB resource.
-
-#table = dynamodb.Table('Favorie_Video_Games')
-
-#response = table.query(
-#  KeyConditionExpression=Key('Genre').eq('Sports')
-#)
-#print(response['Items'])
